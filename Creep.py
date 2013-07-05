@@ -135,23 +135,29 @@ class Creep(Sprite):
 		Sprite.__init__(self)
 		self.id = id
 		self.type=type
-		self.maxhealth=100
+		self.maxhealth=self.type.maxhealth
 		self.health=self.type.maxhealth
 		self.base_image = pygame.image.load(self.type.filename).convert_alpha()
 		self.image = self.base_image
 		self.rect = self.image.get_rect()
+		#initial direction is towards the bottom right, it randmomises as soon as they spawn though
 		self.direction = vec2d(1,1)
+		# @TODO different max/min speed per type
+		# speeds are in pixels per millisecond (are they? check..)
 		self.speedmax = 0.2
 		self.speedmin = 0.11
 		self.elapsed_time=0
 		self.curspeed = uniform(0.08,0.2)
 		self.direction.length = self.curspeed
 		if (pos):
+			#if we specify a starting position it should be the centre
 			self.rect.center = pos
 		else:
+			#otherwise just set the rect x & y and don't bother doing any arithmetic to find the centre
 			self.rect.x = randint(type.spawnBox.x, type.spawnBox.w)
 			self.rect.y = randint(type.spawnBox.y, type.spawnBox.h)
 		self.mask = pygame.mask.from_surface(self.image)
+		#this randomises the initial direction
 		self.rotate(0,360)
 	
 	def __str__(self):
