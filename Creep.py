@@ -15,7 +15,7 @@ class CreepGame():
 		self.clock = pygame.time.Clock()
 		self.bg_color = 0,0,0
 		self.nCreeps = 30 #min (and starting) number of creeps 
-		self.fps=100 #max FPS
+		self.fps=90 #max FPS
 		self.creepSeq=0
 		self.creeps = pygame.sprite.Group()
 		self.createCreepTypes()
@@ -60,8 +60,8 @@ class CreepGame():
 		print "creating creeps"
 		self.pinkType = CreepType()
 		self.pinkType.type='pink'
-		#self.pinkType.filename='pinkcreep.png'
-		self.pinkType.filename='petecreep.png'
+		self.pinkType.filename='pinkcreep.png'
+		#self.pinkType.filename='petecreep.png'
 		self.pinkType.maxhealth=100
 		self.pinkType.spawnBox=self.spawnBox
 		
@@ -144,7 +144,7 @@ class Creep(Sprite):
 		self.direction = vec2d(1,1)
 		# @TODO different max/min speed per type
 		# speeds are in pixels per millisecond (are they? check..)
-		self.speedmax = 0.2
+		self.speedmax = 0.18
 		self.speedmin = 0.11
 		self.elapsed_time=0
 		self.curspeed = uniform(0.08,0.2)
@@ -166,8 +166,7 @@ class Creep(Sprite):
 	def update(self,time):
 		
 		self.elapsed_time += time
-		
-		
+				
 		if self.rect.x < self.type.spawnBox.left:
 		    self.rect.x = self.type.spawnBox.left
 		    self.direction.x *= -1
@@ -211,8 +210,8 @@ class Creep(Sprite):
 					if creep1.health <= 0:
 						True
 						creep1.kill()
-			elif creep1.elapsed_time > randint(100, 500):
-				if (pygame.sprite.collide_circle_ratio(4)(creep1,creep2) ):
+			elif creep1.elapsed_time > randint(200, 500):
+				if (pygame.sprite.collide_circle_ratio(15)(creep1,creep2) ):
 					if creep1.type != creep2.type:
 						if creep1.health>creep2.health:
 							creep2.curspeed = uniform(creep2.curspeed *1.2 , creep2.curspeed*1.3)
@@ -227,10 +226,11 @@ class Creep(Sprite):
 						else:
 							creep1.rotate(creep1.direction.get_angle_between(vec)-180+randint(-10,10))
 					
-			else:
+			
 				if (pygame.sprite.collide_circle_ratio(10)(creep1,creep2) and creep1.health>=creep2.health and (creep1.type == creep2.type and creep1.elapsed_time >= 300)):
 					vec= vec2d(creep2.rect.x - creep1.rect.x,creep2.rect.y - creep1.rect.y)
-					creep1.rotate(creep1.direction.get_angle_between(vec)+randint(-20,20))
+					creep1.rotate(creep1.direction.get_angle_between(vec)+randint(-6,6))
+					creep1.curspeed = uniform(creep1.curspeed *0.8 , creep1.curspeed*0.7)
 
 				
 					
