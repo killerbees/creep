@@ -313,8 +313,8 @@ class Creep(Sprite):
 						vec= vec2d(creep2.rect.x - creep1.rect.x,creep2.rect.y - creep1.rect.y)
 						if creep1.health>creep2.health: #if creep1 is stronger
 							creep1.rotate(creep1.direction.get_angle_between(vec)+randint(-10,10)) #creep1 turns towards creep2 (not perfectly) and the hunt is on!
-						#else:
-							#creep1.rotate(creep1.direction.get_angle_between(vec)-180+randint(-10,10)) #otherwise creep1 turns away!
+						else:
+							creep1.rotate(creep1.direction.get_angle_between(vec)-180+randint(-10,10)) #otherwise creep1 turns away!
 				if (pygame.sprite.collide_circle_ratio(10)(creep1,creep2) and creep1.health>=creep2.health and (creep1.type == creep2.type and creep1.elapsed_time >= 500)):
 						creep1.elapsed_time=0
 						vec= vec2d(creep2.rect.x - creep1.rect.x,creep2.rect.y - creep1.rect.y)
