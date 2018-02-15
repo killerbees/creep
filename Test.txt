@@ -1,2 +1,3 @@
-Test add file for jira integration
+Test add file for JIRA integration
 Add a line
+fix defect 25
